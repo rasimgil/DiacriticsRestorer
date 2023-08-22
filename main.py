@@ -14,7 +14,7 @@ VECTOR_SIZE = 71
 logging.basicConfig(level=logging.INFO)
 
 parser = argparse.ArgumentParser(description='Diacritic Restoration Tool')
-parser.add_argument('--dataset', type=str, default="diac_corpus.txt", help='Path to the dataset')
+parser.add_argument('--dataset', type=str, default="data/diac_corpus.txt", help='Path to the dataset')
 parser.add_argument('--evaluate', action='store_true', help='Evaluate the model')
 parser.add_argument('--train', action='store_true', help='Train the model')
 parser.add_argument('--predict', action='store_true', help='Predict using the model')
@@ -31,7 +31,7 @@ class Dataset:
     dia_dict = {letter: ind for ind, letter in enumerate(ALL_DIA)}
     DIA_TO_NODIA = str.maketrans(LETTERS_DIA + LETTERS_DIA.upper(), LETTERS_NODIA + LETTERS_NODIA.upper())
 
-    def __init__(self, name: str = "diac_corpus.txt"):
+    def __init__(self, name: str = "data/diac_corpus.txt"):
         """
         Initialize Dataset with given corpus file name.
         """
@@ -40,7 +40,7 @@ class Dataset:
             self.target = dataset_file.read()
         self.data = self.target.translate(self.DIA_TO_NODIA)
 
-        with open("diacritics-etest.txt", "r", encoding="utf-8-sig") as dataset_file:
+        with open("data/diacritics-etest.txt", "r", encoding="utf-8-sig") as dataset_file:
             self.gold = dataset_file.read()
         self.test = self.gold.translate(self.DIA_TO_NODIA)
 
@@ -99,13 +99,13 @@ class Model:
         self.model.fit(self.dataset.X_train, self.dataset.y_train)
         end = time.time()
         logging.info(f"Model trained in {end - start:.2f} seconds.")
-        with open("model.pkl", "wb") as model_file:
+        with open("models/model.pkl", "wb") as model_file:
             logging.info("Saving model...")
             pickle.dump(self.model, model_file)
             logging.info("Model saved.")
 
     def _load_model(self):
-        with open("model.pkl", "rb") as model_file:
+        with open("models/model.pkl", "rb") as model_file:
             logging.info("Loading model...")
             self.model = pickle.load(model_file)
             logging.info("Model loaded.")
