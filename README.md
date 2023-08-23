@@ -8,10 +8,10 @@ Ensure you have Python 3.7+ installed on your system.
 ## Setup
 
 1. Clone the repository:
-    ```bash
-   git clone https://github.com/rasimgil/DiacriticsRestorer.git
-    cd DiacriticsRestorer
-    ```
+```bash
+git clone https://github.com/rasimgil/DiacriticsRestorer.git
+cd DiacriticsRestorer
+```
 
 2. Set up a virtual environment:
 ```bash
